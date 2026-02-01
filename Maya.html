@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Miss Mine | Bebu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --deep-pink: #c9184a;
+            --glass: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ffafbd, #ffc3a0, #a2c2e6, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 30px;
+            padding: 35px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            position: relative;
+        }
+
+        .page { display: none; }
+        .active { display: block; animation: fadeIn 0.8s ease-in-out; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { 
+            font-family: 'Dancing Script', cursive;
+            color: #d63384; 
+            font-size: 3rem; 
+            margin-bottom: 10px;
+        }
+
+        p { font-size: 1.2rem; color: #4a4a4a; }
+
+        .btn-wrap {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background: var(--primary-pink);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 35px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: 0.3s ease;
+        }
+
+        button:hover { background: var(--deep-pink); transform: scale(1.05); }
+
+        .btn-no { background: #999; }
+
+        /* Media Setup */
+        .media-stack { display: flex; flex-direction: column; gap: 25px; margin-top: 30px; }
+        .media-container {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 5px solid white;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        img, video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* Full Lyrics Visibility */
+        .lyrics-box {
+            font-style: italic; 
+            color: #7a304a; 
+            line-height: 1.8;
+            margin: 25px 0; 
+            padding: 20px; 
+            border-left: 6px solid #ff4d6d;
+            background: rgba(255, 255, 255, 0.5); 
+            font-size: 1.3rem;
+            border-radius: 0 20px 20px 0;
+            text-align: center;
+            white-space: pre-line; /* Keeps line breaks from your text */
+        }
+
+        /* Message Overlay */
+        #specialMsg {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(214, 51, 132, 0.98);
+            z-index: 2000;
+            padding: 30px;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .nepali-content { font-size: 1.2rem; line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+    <div id="specialMsg">
+        <div class="nepali-content">
+            माया, धेरैबेर लगाएर तिमीकहाँ आएँ म<br>
+            अबदेखिन् सधैँसम्म तिमीलाई माया गर्छु<br>
+            र मुटु मेरो टुक्रिए यही टुक्रिएकै मुटु<br>
+            मेरो हृदयमा धड्कुन्जेल तिमीलाई म पर्खन्छु<br><br>
+            धेरैबेर लगाएर तिमीकहाँ आएँ म<br>
+            अबदेखिन् सधैँसम्म तिमीलाई माया गर्छु<br>
+            र मुटु मेरो टुक्रिए यही टुक्रिएकै मुटु<br>
+            मेरो हृदयमा धड्कुन्जेल तिमीलाई म पर्खन्छु
+        </div>
+        <button onclick="closeMsg()" style="margin-top: 30px; background: white; color: #d63384;">Back ❤️</button>
+    </div>
+
+    <div class="container page active" id="page1">
+        <h1>Hey Cutie! ✨</h1>
+        <p>Ready for your surprise?</p>
+        <div class="btn-wrap">
+            <button onclick="nextPage(2)">Yes Please! 😍</button>
+            <button class="btn-no" onclick="openMsg()">No Please 🙄</button>
+        </div>
+    </div>
+
+    <div class="container page" id="page2">
+        <h1>How are you?</h1>
+        <p>Tell me how you're feeling, Bebu...</p>
+        <div class="btn-wrap">
+            <button onclick="nextPage(3)">Fine 😊</button>
+            <button onclick="nextPage(3)">Good ✨</button>
+            <button onclick="nextPage(3)">Tired 😴</button>
+            <button onclick="nextPage(3)">Missing You 🥺</button>
+        </div>
+    </div>
+
+    <div class="container page" id="page3">
+        <h1>Do you love me? 🥺</h1>
+        <div class="btn-wrap">
+            <button onclick="celebrate()">YES!</button>
+            <button class="btn-no" onclick="openMsg()">No</button>
+        </div>
+    </div>
+
+    <div class="container page" id="page4" style="max-height: 90vh; overflow-y: auto;">
+        <div style="font-size: 3.5rem;">❤️</div>
+        <h1>Happy Valentine’s Day</h1>
+        <p style="font-weight: 600; color: #ff4d6d; font-size: 1.5rem;">Bebu ❤️ Miss Mine</p>
+
+        <div class="lyrics-box">
+            पर नै बसेर म माया गरुँला
+            यही मायाकै खातिर दिनदिनै मरुँला
+            नगण्य माया यो तिमीले बिर्सिए
+            कल्पनाहरू नै साँचेरै बाँचुँला
+        </div>
+
+        <audio id="mySong"><source src="naganya maya tune.mp4" type="audio/mpeg"></audio>
+
+        <div class="media-stack">
+            <div class="media-container"><img src="Pujan.JPG" alt="Bebu"></div>
+            <div class="media-container">
+                <video controls poster="pujan.mov"><source src="pujan.mov" type="video/mp4"></video>
+            </div>
+        </div>
+        <p style="margin: 40px 0; font-size: 1.1rem; opacity: 0.8;">Forever Yours ✨</p>
+    </div>
+
+    <script>
+        function nextPage(num) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('page' + num).classList.add('active');
+        }
+
+        function openMsg() { document.getElementById('specialMsg').style.display = 'flex'; }
+        function closeMsg() { document.getElementById('specialMsg').style.display = 'none'; }
+
+        function celebrate() {
+            confetti({ particleCount: 150, spread: 75, origin: { y: 0.6 } });
+            nextPage(4);
+            const song = document.getElementById('mySong');
+            song.play();
+        }
+    </script>
+</body>
+</html>
